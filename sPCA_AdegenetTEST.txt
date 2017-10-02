@@ -1,0 +1,368 @@
+#Ver el directorio de trabajo
+getwd()
+#Cambiarlo al que contenga el input file
+setwd("C:/Users/Mosky/Documents/AdegenetADE4/Files")
+#comprobamos
+getwd()
+
+
+#Algunas librerías que podrían ser necesarias
+
+library("ape")
+library("genetics")
+library("Rgenetics")
+library("pegas")
+library("Seqinr")
+library("ggplot2")
+library("adegenet")
+library("spdep")
+library ("poppr")
+library ("adehabitat")
+library ("tripack")
+library ("akima")
+
+#Podemos Crear un objeto (archivo conteniendo los datos) en el formato que suelen usar
+#las funciones de Adegenet a partir de un input de Genpop
+#Genind13 <- import2genind("13loci13popMixID.gen", missing=NA, quiet=FALSE)
+
+#Luego habría que poner coordenadas en un Genind
+#Genind13$other$xy <- XYunic
+#Genind13$other$xy
+#Genind13
+
+#Pero es más facil hacerlo a través de un Genalex con coordenadas y nombres de poblaciones
+Genind13 <- read.genalex("genalexfin.csv", ploidy = 2, geo = TRUE, region = FALSE, genclone = FALSE, sep = ";")
+
+#Lo renombramos a "obj1" para ser más rápido
+#HAY QUE SUSTITUIR LOS MISSING POR MEAN ALLELE FREQUENCY
+
+obj1 <- na.replace(Genind13, "mean")
+
+
+#vemos que "argumentos" necesita la función para hacer spcas
+
+args(spca)
+
+#Uno de los puntos más importantes a escoger es cómo queremos hacer la red de conexiones
+#Conexion Network entre los diferentes puntos
+
+?chooseCN
+
+#Hacemos primero un spca tipo 1, usando triangulación de Delaunay
+# para hacer la red de conexiones más general (Conexion Network)
+
+#El siguiente punto importante es la información retenida de los eigenvalues
+
+#scannf = FALSE indica que tome los valores que quiera, podemos poner "TRUE"
+#para escoger cuales deseamos usar.
+#Los de la izquierda (positivos) son los valores de estructura global y los de 
+#la derecha (negativos) las pautas a nivel local.
+#Una estructura fuerte debería de significar valores lo muy extremos (positivos
+#o negativos) y el PCA debería de contener valores globales, no locales.
+#Si no ponemos nada más nos pondrá una ghráfica con los eigenvalues y nos preguntará
+#cuantos retenemos de cada, pero se lo podemos decir directamente con nfposi y nfnega
+
+mySpca1 <- spca(obj1,type=1,scannf=FALSE,plot.nb=TRUE, nfposi=1,nfnega=0)
+
+#vemos
+mySpca1
+#representamos los valores
+barplot(mySpca1$eig, main="A variant of the plotnn of sPCA eigenvalues", 
+        col=spectral(length(mySpca1$eig)))
+legend("topright", fill=spectral(2),
+       leg=c("Global structures", "Local structures"))
+abline(h=0,col="grey")
+
+#el gráfico de eigenvalues da una idea de estructuras globales y locales
+#pero además cada eigenvalues contiene información de la varianza y la autocorrelación
+#espacial (Moran's I component)
+
+screeplot(mySpca1)
+
+#Visto lo visto, los eigenvalues 1, 2 y 3 dan mucha más información global que el resto
+#quizás valdría la pena repetir reteniendo esos 3 valores
+
+#seguimos analizando el spca, vamos a ver si la estructura global es significativa
+#rechazar la hipotesis nula = estructura!
+
+myGtest1 <- global.rtest(obj1$tab,mySpca1$lw,nperm=999)
+myGtest1
+plot(myGtest1)
+
+#vemos lo mismo para la estructura intra (local)
+
+myLtest1 <- local.rtest(obj1$tab,mySpca1$lw,nperm=999)
+myLtest1
+plot(myLtest1)
+
+#Tras comprobar si las diferencias locales son significativas representamos el spca
+
+#veremos la network (1), la diferenciación en 3 gráficos distintos (2-4),
+# y los eigenvalues en dos graficos diferentes (5 y 6)
+plot(mySpca1)
+
+#Intentamos verlo mejor
+colorplot(mySpca1,cex=3,main="colorplot of mySpca, first global score")
+
+#Podemos intertar mejorarlo
+x <- other(obj1)$xy[,1]
+y <- other(obj1)$xy[,2]
+temp1 <- interp(x, y, mySpca1$li[,1])
+image(temp1, col=azur(100))
+points(x,y)
+
+#Lo modificamos un poco, usando valores más exagerados para verlo más claro
+interpX <- seq(min(x),max(x),le=200)
+interpY <- seq(min(y),max(y),le=200)
+temp2 <- interp(x, y, mySpca1$ls[,1], xo=interpX, yo=interpY)
+image(temp2, col=azur(100))
+points(x,y)
+
+#Ahora un gráfico de "calor"
+
+myPal <- colorRampPalette(c("firebrick2", "white", "lightslateblue"))
+annot <- function(){
+title("sPCA - interpolated map of individual scores")
+points(x,y)
+}
+filled.contour(temp2, color.pal=myPal, nlev=50,
+               key.title=title("lagged nnscore 1"), plot.title=annot())
+
+#Podemos buscar que alelos contribuyen más a el PCA, por si hay alguno "mal"
+
+myLoadings1 <- mySpca1$c1[,1]^2
+names(myLoadings1) <- rownames(mySpca1$c1)
+loadingplot(myLoadings1, xlab="Alleles",
+            ylab="Weight of the alleles",
+            main="Contribution of alleles nn to the first sPCA axis")
+
+#Vemos cuales contribuyen más
+temp3 <- loadingplot(myLoadings1, threshold=quantile(myLoadings1, 0.95),
+                    xlab="Alleles",ylab="Weight of the alleles",
+                    main="Contribution of alleles \n to the first sPCA axis",
+                    fac=obj1$loc.fac, cex.fac=0.6)
+temp3
+
+# Los gráficos de barras son más acertados en ese aspecto
+boxplot(myLoadings1~obj1$loc.fac, las=3, ylab="Contribution", xlab="Marker",
+        main="Contributions by markers nnto the first global score", col="grey")
+
+
+
+
+
+
+
+#Provamos con más eigenvalues. Primero 3 positivos, luego 1 negativo
+
+
+
+
+
+mySpca2 <- spca(obj1,type=1,scannf=FALSE,plot.nb=TRUE, nfposi=3,nfnega=0)
+
+#vemos
+mySpca2
+#representamos los valores
+barplot(mySpca2$eig, main="A variant of the plotnn of sPCA eigenvalues", 
+        col=spectral(length(mySpca2$eig)))
+legend("topright", fill=spectral(2),
+       leg=c("Global structures", "Local structures"))
+abline(h=0,col="grey")
+
+#el gráfico de eigenvalues da una idea de estructuras globales y locales
+#pero además cada eigenvalues contiene información de la varianza y la autocorrelación
+#espacial (Moran's I component)
+
+screeplot(mySpca2)
+
+#Visto lo visto, los eigenvalues 1, 2 y 3 dan mucha más información global que el resto
+#quizás valdría la pena repetir reteniendo esos 3 valores
+
+#seguimos analizando el spca, vamos a ver si la estructura global es significativa
+#rechazar la hipotesis nula = estructura!
+
+myGtest2 <- global.rtest(obj1$tab,mySpca2$lw,nperm=999)
+myGtest2
+plot(myGtest2)
+
+#vemos lo mismo para la estructura intra (local)
+
+myLtest2 <- local.rtest(obj1$tab,mySpca2$lw,nperm=999)
+myLtest2
+plot(myLtest2)
+
+#Tras comprobar si las diferencias locales son significativas representamos el spca
+
+#veremos la network (1), la diferenciación en 3 gráficos distintos (2-4),
+# y los eigenvalues en dos graficos diferentes (5 y 6)
+plot(mySpca2)
+
+#Intentamos verlo mejor
+colorplot(mySpca2,cex=3,main="colorplot of mySpca, first global score")
+
+#Podemos intertar mejorarlo
+x <- other(obj1)$xy[,1]
+y <- other(obj1)$xy[,2]
+temp4 <- interp(x, y, mySpca2$li[,1])
+image(temp4, col=azur(100))
+points(x,y)
+
+#Lo modificamos un poco, usando valores más exagerados para verlo más claro
+interpX <- seq(min(x),max(x),le=200)
+interpY <- seq(min(y),max(y),le=200)
+temp5 <- interp(x, y, mySpca2$ls[,1], xo=interpX, yo=interpY)
+image(temp5, col=azur(100))
+points(x,y)
+
+#Ahora un gráfico de "calor"
+
+myPal2 <- colorRampPalette(c("firebrick2", "white", "lightslateblue"))
+annot <- function(){
+  title("sPCA - interpolated map of individual scores")
+  points(x,y)
+}
+filled.contour(temp5, color.pal=myPal2, nlev=50,
+               key.title=title("lagged nnscore 1"), plot.title=annot())
+
+
+
+
+
+#ahora con 2 y uno negativo
+
+
+
+mySpca3 <- spca(obj1,type=1,scannf=FALSE,plot.nb=TRUE, nfposi=2,nfnega=1)
+
+#vemos
+mySpca3
+#representamos los valores
+barplot(mySpca3$eig, main="A variant of the plotnn of sPCA eigenvalues", 
+        col=spectral(length(mySpca3$eig)))
+legend("topright", fill=spectral(2),
+       leg=c("Global structures", "Local structures"))
+abline(h=0,col="grey")
+
+#el gráfico de eigenvalues da una idea de estructuras globales y locales
+#pero además cada eigenvalues contiene información de la varianza y la autocorrelación
+#espacial (Moran's I component)
+
+screeplot(mySpca3)
+
+#Visto lo visto, los eigenvalues 1, 2 y 3 dan mucha más información global que el resto
+#quizás valdría la pena repetir reteniendo esos 3 valores
+
+#seguimos analizando el spca, vamos a ver si la estructura global es significativa
+#rechazar la hipotesis nula = estructura!
+
+myGtest3<- global.rtest(obj1$tab,mySpca1$lw,nperm=999)
+myGtest3
+plot(myGtest3)
+
+#vemos lo mismo para la estructura intra (local)
+
+myLtest3<- local.rtest(obj1$tab,mySpca1$lw,nperm=999)
+myLtest3
+plot(myLtest3)
+
+#Tras comprobar si las diferencias locales son significativas representamos el spca
+
+#veremos la network (1), la diferenciación en 3 gráficos distintos (2-4),
+# y los eigenvalues en dos graficos diferentes (5 y 6)
+plot(mySpca3)
+
+#Intentamos verlo mejor
+colorplot(mySpca3, cex=3,main="colorplot of mySpca, first global score")
+
+#Podemos intertar mejorarlo
+x <- other(obj1)$xy[,1]
+y <- other(obj1)$xy[,2]
+temp6 <- interp(x, y, mySpca3$li[,1])
+image(temp6, col=azur(100))
+points(x,y)
+
+#Lo modificamos un poco, usando valores más exagerados para verlo más claro
+interpX <- seq(min(x),max(x),le=200)
+interpY <- seq(min(y),max(y),le=200)
+temp7 <- interp(x, y, mySpca3$ls[,1], xo=interpX, yo=interpY)
+image(temp7, col=azur(100))
+points(x,y)
+
+#Ahora un gráfico de "calor"
+
+myPal <- colorRampPalette(c("firebrick2", "white", "lightslateblue"))
+annot <- function(){
+  title("sPCA - interpolated map of individual scores")
+  points(x,y)
+}
+filled.contour(temp7, color.pal=myPal, nlev=50,
+               key.title=title("lagged nnscore 1"), plot.title=annot())
+
+
+
+
+#Otra posibilidad es hacer un tipo 5: que conecta las zonas a través de localidades
+#vecinas mediante las pairwise geographic distances.
+
+
+
+mySpca51 <- spca(obj1,type=5,d1=0,d2=15380,scannf=FALSE)
+
+barplot(mySpca51$eig, main="A variant of the plotnn of sPCA eigenvalues", 
+        col=spectral(length(mySpca51$eig)))
+legend("topright", fill=spectral(2),
+       leg=c("Global structures", "Local structures"))
+abline(h=0,col="grey")
+
+screeplot(mySpca51)
+
+#parece que vale la pena coger al menos 2 eigenvalues
+
+mySpca5 <- spca(obj1,type=5,d1=0,d2=15380,scannf=FALSE, plot.nb=TRUE, nfposi=2,nfnega=1)
+mySpca5
+
+#vemos si hay estructura
+
+myGtest5 <- global.rtest(obj1$tab,mySpca5$lw,nperm=999)
+myGtest5
+plot(myGtest5)
+
+#vemos lo mismo para la estructura intra (local)
+
+myLtest5 <- local.rtest(obj1$tab,mySpca5$lw,nperm=999)
+myLtest5
+plot(myLtest5)
+
+#representamos
+
+plot(mySpca5)
+
+#Intentamos verlo mejor
+colorplot(mySpca5, cex=3,main="colorplot of mySpca, first global score")
+
+#Podemos intertar mejorarlo
+x <- other(obj1)$xy[,1]
+y <- other(obj1)$xy[,2]
+temp <- interp(x, y, mySpca5$li[,1])
+image(temp, col=azur(100))
+points(x,y)
+
+#Lo modificamos un poco, usando valores más exagerados para verlo más claro
+interpX <- seq(min(x),max(x),le=200)
+interpY <- seq(min(y),max(y),le=200)
+temp <- interp(x, y, mySpca5$ls[,1], xo=interpX, yo=interpY)
+image(temp, col=azur(100))
+points(x,y)
+
+#Ahora un gráfico de "calor"
+
+myPal <- colorRampPalette(c("firebrick2", "white", "lightslateblue"))
+annot <- function(){
+  title("sPCA - interpolated map of individual scores")
+  points(x,y)
+}
+filled.contour(temp, color.pal=myPal, nlev=50,
+               key.title=title("lagged nnscore 1"), plot.title=annot())
+
+#Parece haber cierta división entre cara norte y cara Sur
