@@ -15,9 +15,9 @@ measurespod														#chek
 
 #input file must be
 #		#Comment or Title
-#		tag,sex,pop,group,measurement1,measurement2,measurement3,measurement4,measurement5,measurement6...measurement15
-#		001,M,A,MA,04,08,15,16,23,42...n
-#		002,F,B,FB,13,12,24,42,15,18...n
+#		tag, sex,pop,group,measure1,m2,m3,m4,m5 ... m15
+#		001, M,  A,  MA,	04,08,15,16,23 ... 42
+#		002, F,  B,  FB,	02,71,82,81,82 ... 84
 #...etc
 
 
