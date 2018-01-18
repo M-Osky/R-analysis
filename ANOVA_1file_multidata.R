@@ -16,9 +16,10 @@ measurespod														#chek
 #input file must be
 #		#Comment or Title
 #		tag, sex,pop,group,measure1,m2,m3,m4,m5 ... m15
-#		001, M,  A,  MA,	04,08,15,16,23 ... 42
-#		002, F,  B,  FB,	02,71,82,81,82 ... 84
+#		001, M,  A,  MA,	04, 08,15,16,23 ... 42
+#		002, F,  B,  FB,	02, 71,82,81,82 ... 84
 #...etc
+# Tabs and spaces are there only for the data to mach the position of the header
 
 
 variablenames <- colnames (measurespod)
