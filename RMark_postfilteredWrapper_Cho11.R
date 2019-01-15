@@ -1,3 +1,5 @@
+#Example of a quick R script that can be used for running RMark.
+#It is quite specific for my data so may not be useful, but I keep it here as a reference
 #POPAN CHORRILLO 11: Two plots (j and i); two files each (naz and ALL) + All entire area
 
 
