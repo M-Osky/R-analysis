@@ -1,4 +1,4 @@
-# R
+# R analysis
 Some short R scripts I wrote to analyse my data.
 This is just a sample of some of the work I have done with R.
 I used most of those scripts long time ago and I do NOT recommend their use, some of them are really old.
