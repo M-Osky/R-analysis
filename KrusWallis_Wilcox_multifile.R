@@ -5,6 +5,8 @@
 # It will output box plots and a file with the Kruskal-Wallis test for each grouping variable defined and a pari-wise wilcoxon test
 
 #I just wrote it today and I'm going to upload it, so it may need some debugging
+#Input file as in my other scripts, columns with individual tags or sueless data, then columns with grouping variables, then columns with the variables to analyse
+#observations in rows
 
 getwd()
 setwd("D:/Dropbox/MOSKY/CURRO/PODARCIS/Measurements/F1crosses/Petra")
