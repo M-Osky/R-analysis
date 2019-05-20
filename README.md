@@ -4,7 +4,7 @@ This is just a sample of some of the work I do with R either for our own researc
 
 Basically you have:
 Parametric tests for Normal data: t-test if grouping variables with only two factors
-  One way ANOVa for all grouping variables with more than 2 factors
+  One way ANOVA for all grouping variables with more than 2 factors
   - If ANOVA is significant: pair-wise pos-hoc tukey test
   - If ANOVA is non-significant: pair-wise Duncan test
 Plots will be saved automatically. If there is 4 factors bars between the boxes will show if there is significant differences between groups. For more factors letters in the top of the boxes will mark which ones are not significantly different.
