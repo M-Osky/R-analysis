@@ -14,7 +14,7 @@ Plots will be saved automatically. If there is 4 factors bars between the boxes 
 
 Works with multiple files with multiple grouping variables, but all of them must have the same data structure.
 
-I have new versions of similar analysis for non-parametric and for multivariant analysis (that are now at R-analysis/old/) will upload when properly commented.
+I have new versions of similar analysis for non-parametric and for multivariant analysis (the previous versions are now at R-analysis/old/) will upload when properly commented.
 
 	id	extrainfo	pop	sex	var1	var2	var3	var4	var5	var6
 	Lem042	LemuriaNA	LM	fem	0004	0008	0015	0016	0023	0042
