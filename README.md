@@ -1,18 +1,20 @@
 # R analysis
 Some short R scripts I wrote to analyse my data.
-This is just a sample of some of the work I have done with R.
+This is just a sample of some of the work I do with R either for our own research or fo the students.
 
 Basically you have:
-one-way ANOVA and t-test for Normal data
-Kruskall-Wallis and Wilcoxon test for non-Normal
-And multivariant analysis: PCA and LDA
-They include a few lines about the input file needed and so, so should be quite straigh forward to use them.
-Usually columns should be sorted as this: descriptors (not analised), grouping variables, numerical variables.
+Parametric tests for Normal data: t-test if grouping variables with only two factors
+  One way ANOVa for all grouping variables with more than 2 factors
+  - If ANOVA is significant: pair-wise pos-hoc tukey test
+  - If ANOVA is non-significant: pair-wise Duncan test
+Plots will be saved automatically. If there is 4 factors bars between the boxes will show if there is significant differences between groups. For more factors letters in the top of the boxes will mark which ones are not significantly different.
 
-  id   extrainfo   pop   sex   var1    var2    var3    var4    var5    var6
-  Lem042    LemuriaNA   LM    fem   0004    0008    0015    0016    0023    0042  
-  Atl016    Atlantida   AT    fem   0003    0014    0015    0092    0062    0036
-  Atl028    Atlantida   AT    mal   0013    0021    0034    0055    0089    0144
+Works with multiple files with multiple grouping variables, but all of them must have the same data structure.
 
-I'm still working (when I have time) with the RMark scripts, recently found out I could improve some of the models (they weren't 100% correct), as soon as I update them, they will be here. Feedback will be strongly appreciated.
-Cheers!
+I have new versions of similar analysis for non-parametric and for multivariant analysis (that are now at R-analysis/old/) will upload when properly commented.
+
+	id	extrainfo	pop	sex	var1	var2	var3	var4	var5	var6
+	Lem042	LemuriaNA	LM	fem	0004	0008	0015	0016	0023	0042
+	Atl016	Atlantis	AT	fem	0003	0014	0015	0092	0062	0036
+	Atl028	AtlantidaSE	AT	mal	0013	0021	0034	0055	0089	0144
+  
