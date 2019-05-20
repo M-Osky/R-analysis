@@ -2,7 +2,6 @@
 Some short R scripts I wrote to analyse my data.
 This is just a sample of some of the work I do with R either for our own research or fo the students.
 
-Basically you have:
 Parametric tests for Normal data: t-test if grouping variables with only two factors
   One way ANOVA for all grouping variables with more than 2 factors
   - If ANOVA is significant: pair-wise pos-hoc tukey test
