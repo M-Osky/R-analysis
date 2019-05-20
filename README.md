@@ -9,7 +9,7 @@ And multivariant analysis: PCA and LDA
 They include a few lines about the input file needed and so, so should be quite straigh forward to use them.
 Usually columns should be sorted as this: descriptors (not analised), grouping variables, numerical variables.
 
-  ind.tag   extrainfo   pop   sex   var1    var2    var3    var4    var5    var6
+  id   extrainfo   pop   sex   var1    var2    var3    var4    var5    var6
   Lem042    LemuriaNA   LM    fem   0004    0008    0015    0016    0023    0042  
   Atl016    Atlantida   AT    fem   0003    0014    0015    0092    0062    0036
   Atl028    Atlantida   AT    mal   0013    0021    0034    0055    0089    0144
