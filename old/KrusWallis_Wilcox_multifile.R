@@ -1,4 +1,4 @@
-#R sucks! <-- One day you'll be thankfull that you specify the language you are using in each script
+#R sucks!the language you are using in each script
 # M'Ósky 2019
 
 # USAGE: This script should automatically analyze all the csv files in the wd
