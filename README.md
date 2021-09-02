@@ -1,6 +1,15 @@
 # R analysis
 Some short R scripts I wrote to analyse my data.
-This is just a sample of some of the work I do with R either for our own research or fo the students.
+This is just a sample of some of the work I do with R either for our own research or for the students.
+
+I will be uploading and editing this continuously, some scripts can be run in desktop R, some other are set up to run in our unix server (using command line).
+
+
+
+
+# Will add descriptions shortly here
+
+
 
 Parametric tests for Normal data:
 
