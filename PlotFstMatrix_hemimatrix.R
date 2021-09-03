@@ -23,17 +23,12 @@ cat("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 getwd() #check
 #Change working directory if needed
-setwd("D:/Dropbox/MOSKY/CURRO/PODARCIS/PopGenet/genpopR/sicula596x39k/sicula585x39K_noutfix/FirstLDHWe/sic14_pairFsts")
+setwd("")
 
 
 #input file must be an FSTmatrix from Stammp package
 #hemimatrix with NA on the top-right and populations in rows and headers
 inputname="FSTmatrix_sicula585x39k_m05R7r6h6DP420_1p0p_0m0p"
-inputname="FstMatrix_candidate116sicula585x39k_excel"
-inputname="FstMatrix_sicula585x39k_excel"
-inputname="FstMatrix_random116sicula585x39k_excel"
-inputname="FSTmatrix_sicula585x39k_m05R7r6h6DP420_1p0p_noLDmax19"
-inputname="FSTmatrix_sicula585x39k_m05R7r6h6DP420_1p0p_noLDHWe27052021_sic14"
 
 info="All P. sicula natural populations (LD and HWe filtered before subsampling)"
 #info="whatever"
