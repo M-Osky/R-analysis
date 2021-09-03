@@ -7,12 +7,10 @@ This is just a sample of some of the bioestatistics work I do with R either for 
 
 # Short description
 
-- HWtest
-  Analysis per population of loci out of Hardy-Weinberg equilibrium, filter out according to a p-value and percentage.
-- LDA
-  Incomplete LDA analysis script, it works but needs to be adjusted and annotated properly for each case, still could be useful for some people starting
-- ANOVA
-  Useful script when doing exploratory analysis of multiple files, we use it to check if the same variables behave similarly in different datasets
+- HWtest - Analysis per population of loci out of Hardy-Weinberg equilibrium, filter out according to a p-value and percentage.
+- LDA - Incomplete Linear Discriminant Analysis script, it works but needs to be adjusted and annotated properly for each case, still could be useful for some people starting
+- Normality - test normality in multiple files and variables, plots distributions and tests different data transformation
+- parametric tests (ANOVA) - Useful script when doing exploratory analysis of multiple files, we use it to check if the same variables behave similarly in different datasets
 
 # Will be adding here more descriptions
 
