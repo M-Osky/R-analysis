@@ -23,6 +23,6 @@ This is just a sample of some of the bioestatistics work I do with R either for 
 - pairLDdist - get summary tables from the scaffold sizes and LD from Plink LD analysis output [command line version]
 - regression ressiduals - calculate linear and quadratic regression from multiple files, save plots, residuals, and summary table
 
-# Will be adding here more descriptions
+# I'll be adding more complex scripts here once they are ready to be used by anyone (properly annotated and more broad options)
 
 
