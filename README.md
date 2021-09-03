@@ -18,7 +18,10 @@ This is just a sample of some of the bioestatistics work I do with R either for 
 - Run and Plot RDA - not a ready to use script, needs better anotation and to be adjusted for each input file and option.
 - average SD - Quick script that will output a table of summary statistics (quartiles, average, SD, etc.) from multiple files 
 - basicgen Fst - Calculates pairwise Fst values with confidence intervals and p-values [command line version]
-- basicgen diverindex - Calculates 
+- basicgen diverindex - Calculates various allelic diversity indexes using hierfsts, diveRsity and dartR, outputs a table per population [command line version] 
+- pairLDboxplot - categorize plink LD table in kb groups, useful to reduce file size and plot [command line version]
+- pairLDdist - get summary tables from the scaffold sizes and LD from Plink LD analysis output [command line version]
+- regression ressiduals - calculate linear and quadratic regression from multiple files, save plots, residuals, and summary table
 
 # Will be adding here more descriptions
 
