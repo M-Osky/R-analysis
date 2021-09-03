@@ -14,6 +14,11 @@ This is just a sample of some of the bioestatistics work I do with R either for 
 - Plot Fst Matrix - Plot per population pair-wise Fst hemimatrices (tested with Stampp package outputs)
 - Plot Manhattan Fst - Quick script to plot per-locus Fst pair-wise values from populations (Stacks) output
 - Pst_mcmc - Pst as an aproximationn to Qst (phenotypic distance) and comparison with Fst using Bayesian GLMM approach. [command line version]
+- Pst_mcmc - Pst as an aproximationn to Qst (phenotypic distance) and comparison with Fst using Bayesian GLMM approach. [desktop version]
+- Run and Plot RDA - not a ready to use script, needs better anotation and to be adjusted for each input file and option.
+- average SD - Quick script that will output a table of summary statistics (quartiles, average, SD, etc.) from multiple files 
+- basicgen Fst - Calculates pairwise Fst values with confidence intervals and p-values [command line version]
+- basicgen diverindex - Calculates 
 
 # Will be adding here more descriptions
 
