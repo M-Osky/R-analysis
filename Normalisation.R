@@ -1,5 +1,17 @@
-#Change working directorysetwd
-#Plot variables, test for normality while aplying multiple transformations
+#Test normality in multiple variables and files, plot distribution, perform Kruskal-Wallis in raw variables and after applying multiple transformations
+
+# The input file is:
+#		tag, indiv, sex,pop,group,measure1,m2,m3,m4,m5 ... n
+#		Am001   001, M,  A,  MA,		04,08,15,16,23 ... 42
+#		Bm002   002, F,  B,  FB,		02,71,82,81,82 ... 84
+#...etc
+# Two first columns must be individual or non-usable data
+# Columns with grouping variables (3 in the example, from 3 to 5)
+# Columns with your variables
+# (In the example tabs and spaces are there only for the data to match the position of the header)
+
+
+
 
 # =====================================================================
 # For compatibility with Rscript.exe (only if not loading libraries correctly): 
@@ -49,18 +61,6 @@ library("caret")
 library("heatmaply")
 
 
-
-
-
-# The input file is:
-#		tag, indiv, sex,pop,group,measure1,m2,m3,m4,m5 ... n
-#		Am001   001, M,  A,  MA,		04,08,15,16,23 ... 42
-#		Bm002   002, F,  B,  FB,		02,71,82,81,82 ... 84
-#...etc
-# Two first columns must be individual or non-usable data
-# Columns with grouping variables (3 in the example, from 3 to 5)
-# Columns with your variables
-# (In the example tabs and spaces are there only for the data to match the position of the header)
 
 
 
