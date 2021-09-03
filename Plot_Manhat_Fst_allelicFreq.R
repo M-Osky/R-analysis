@@ -1,14 +1,13 @@
-
+#Quick script to plot per-locus Fst pair-wise values from populations (Stacks) output
 
 #populations Fst import
-setwd("D:/Dropbox/MOSKY/CURRO/PODARCIS/PopGenet/populations_stacks/Psic/PKPM")
+setwd("")
 # perl one liner to extract only relevant columns:
 # perl -lne '/^(.*?)\t(.*?)\t(.*?)\t(.*?)\t(.*?)\t(.*?)\t(.*?)\t(.*?)\t(.*?)\t.*?$/; print "$1\t$2\t$3\t$8\t$9"' populations.fst_PK-PM.tsv > fstlist
-# some error, tried changing EOL to windows
-# some error, tried changing "\t" to ","
-# problem was with column names I think
+#if some error, try changing EOL to windows
+# if some error, try changing "\t" to ","
+# you may need to rename column names
 dataset = read.table("fstlist", sep = ',', header =TRUE)
-dataset = read.table("kakafuti.txt", sep = ',', header =TRUE)
 
 nrow(dataset)
 
