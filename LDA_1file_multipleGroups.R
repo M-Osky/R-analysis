@@ -3,7 +3,7 @@
 #LDA script, works at once with multiple grouping variables
 #LINEAR DISCRIMINANT ANALYSIS it is in fact a regression analysis but it looks for the combination of variables that best explains the variance.
 # the main difference from PCA is that it is not blind this takes your groups into account when calculating the equivalent to the PCs
-# Good think, it allows prediction
+# Good thing, it allows prediction
 
 #This script is still under construction. It should work, but is not complete
 
