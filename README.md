@@ -11,9 +11,9 @@ This is just a sample of some of the bioestatistics work I do with R either for 
 - LDA - Incomplete Linear Discriminant Analysis script, it works but needs to be adjusted and annotated properly for each case, still could be useful for some people starting
 - Normality - test normality in multiple files and variables, plots distributions and tests different data transformation
 - parametric tests (ANOVA) - Useful script when doing exploratory analysis of multiple files, we use it to check if the same variables behave similarly in different datasets
-- Plot Fst Matrix
+- Plot Fst Matrix - Plot per population pair-wise Fst hemimatrices (tested with Stampp package outputs)
 - Plot Manhattan Fst - Quick script to plot per-locus Fst pair-wise values from populations (Stacks) output
-- 
+- Pst_mcmc - Pst as an aproximationn to Qst (phenotypic distance) and comparison with Fst using Bayesian GLMM approach. [command line version]
 
 # Will be adding here more descriptions
 
